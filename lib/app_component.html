@@ -1,0 +1,32 @@
+<div>
+    <label>Please enter a number </label>
+    <input type="number" [(ngModel)]="numValue" placeholder="0">
+    <button (click)="showTable()">Submit</button>
+    <p *ngIf="error">Please enter a number between 2 and 100</p>
+</div>
+
+
+
+<div *ngIf="show" class="table-container">
+    <table class="info-table" id="col-table">
+        <tr>
+            <th></th>
+            <th *ngFor="let item of list">{{getAlphabet(item)}}</th>
+        </tr>
+    </table>
+    <div class="inner-table-container">
+
+
+    <table class="info-table" id="row-table">
+        <tr *ngFor="let item of list; let i = index">
+            <td>{{item}}</td>
+        </tr>
+    </table>
+<table class="table-gradient">
+            <tr *ngFor="let item of list; let i = index">
+                <td *ngFor="let item of list" (hover)="highlightRowCol(i)"> {{item+i+1}} </td>
+            </tr>
+
+    </table>
+    </div>
+</div>
