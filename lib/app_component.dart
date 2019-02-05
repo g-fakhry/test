@@ -14,32 +14,39 @@ class AppComponent {
   var show = false;
   var error = false ;
 
-  void showTable() {
-    if(numValue > 100 || numValue < 2) {
-      error = true ;
+  void showTable(val) {
+    var x = int.tryParse(val);
+    if (x != null) {
+      if(x <= 100 || x >= 2) {
+        numValue = x;
+        list = List<int>.generate(x, (i) => i + 1);
+        error = false ;
+        show = true;
+      }
+    }
+     else {
       show = false;
-    } else {
-      list = List<int>.generate(numValue, (i) => i + 1);
-      show = true;
-      error = false;
+      error = true;
     }
   }
 
-  getAlphabet(i) {
-    if(i < 27) {
-      return String.fromCharCode(i+64);
-    } else if ( i< 53) {
-      return 'A' + String.fromCharCode(i - 26 +64);
-    } else if ( i < 79) {
-      return 'B' + String.fromCharCode(i - 52 +64);
-    } else return 'C' + String.fromCharCode(i - 78 +64);
+  getAlphabet(index) {
+    if(index < 27) {
+      return String.fromCharCode(index+64);
+    } else if ( index % 26 == 0) {
+      return getAlphabet((index/26).floor()-1) + 'Z';
+    } else {
+      return getAlphabet((index / 26).floor()) + '' + getAlphabet(index % 26);
+    }
   }
 
-  highlightRowCol(i) {
-    var colIndex = i-1;
-    var rowIndex = i%numValue;
-
-    // not sure if this is a requirement in the test as it was not specifically mentioned in the description
+  getBackgroundColor(index)
+  {
+    var range = (numValue*2)-2;
+    var gradient = ((index-1)*255/range).floor() ;
+    gradient = (255 - gradient).toString();
+    return 'rgb(255,'+ gradient + ',' + gradient + ')';
   }
+
 }
 
